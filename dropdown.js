@@ -26,7 +26,7 @@ for (var i = 0; i < menuText.length; i++) {
 
 function menuClick() {
 	var menuTextItem = this.innerHTML;
-	var matches = document.querySelector("ul li");
+	var matches = document.querySelector("#dropdownUl li");
 
 	for (var i = 0; i < menuText.length; i++) {
 		matches.parentNode.childNodes[i].classList.remove('active');
@@ -35,7 +35,6 @@ function menuClick() {
 	this.classList.add('active');
 	button.innerHTML = menuTextItem;
 	dropDownList.style.display = "none";
-
 
 	switch (menuTextItem) {
 	    case 'Nav Point':
@@ -60,10 +59,12 @@ dropDownList.appendChild(dropdownUl);
 // CREATE BUTTON
 
 const buttonNode = document.createTextNode('Nav Point');
+button.setAttribute("id", "dropdown-button");
 button.appendChild(buttonNode);
 
 // BUTTON CLICK FUNCTION
 button.onclick = buttonClick;
+window.onclick = buttonClick;
 
 function buttonClick() {
 	console.log('Hi, I am Button!!');
@@ -81,5 +82,16 @@ area.appendChild(dropDownList);
 var activeClass = document.getElementById('dropdownLi-1');
 console.log(activeClass);
 activeClass.classList.add('active');
+
+var dropdownAr = document.getElementById('dropdownDiv');
+
+window.onclick = function(event) {
+  if (!event.target.matches('#dropdown-button')) {
+    var dropdowns = document.getElementById('dropdownDiv');
+      if (dropdowns.style.display = "block") {
+        dropdowns.style.display = "none";
+      }
+  }
+}
 
 console.log(area);
