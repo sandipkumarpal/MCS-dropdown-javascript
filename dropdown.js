@@ -1,5 +1,6 @@
 const area = document.getElementById('dropdown-area');
 const button = document.createElement("button");
+button.setAttribute("id", "dropdown-button");
 
 // CREATE DROPDOWN LISTING
 const dropDownList = document.createElement("div");
@@ -8,59 +9,73 @@ dropDownList.style.backgroundColor = "#333";
 dropDownList.style.padding = "20px";
 dropDownList.style.display = "none";
 
+var selectOption= document.getElementById("dropdownlist");
+
+// CREATE BUTTON
+var selectText = selectOption.selectedIndex;
+var buttonNode = document.createTextNode(selectOption.options[selectText].innerHTML);
+// var buttonNode1 = document.createTextNode(selectOption.options[selectText].innerHTML);
+button.appendChild(buttonNode);
+
 // CREATE ITEMS UNDER THE DROPDOWNLIST
 const dropdownUl = document.createElement("ul");
 dropdownUl.setAttribute("id", "dropdownUl");
-var menuText = ['Nav Point', 'Loiter Time', 'Loiter Turns', 'Loiter Infinite'];
 
-for (var i = 0; i < menuText.length; i++) {
+
+for(i=0; i<selectOption.options.length;i++){
 	var dropdownLi = document.createElement("li");
-    var dropdownLiNode = document.createTextNode(menuText[i]);
-    dropdownLi.appendChild(dropdownLiNode);
-    dropdownLi.setAttribute("id", "dropdownLi-" + (i+1));
-    dropdownUl.appendChild(dropdownLi);
-
-    dropdownLi.onclick = menuClick;
-}
-
-
-function menuClick() {
-	var menuTextItem = this.innerHTML;
-	var matches = document.querySelector("#dropdownUl li");
-
-	for (var i = 0; i < menuText.length; i++) {
-		matches.parentNode.childNodes[i].classList.remove('active');
-	}
-
-	this.classList.add('active');
-	button.innerHTML = menuTextItem;
-	dropDownList.style.display = "none";
-
-	switch (menuTextItem) {
-	    case 'Nav Point':
-	    	console.log(menuTextItem);
-	        break;
-	    case 'Loiter Time':
-	    	console.log(menuTextItem);
-	        break;
-	    case 'Loiter Turns':
-	    	console.log(menuTextItem);
-	        break;
-	    case 'Loiter Infinite':
-	    	console.log(menuTextItem);
-	        break;
-	    default: 
-	        console.log('None');
-	}
+	var dropdownLiNode = document.createTextNode(selectOption.options[i].innerHTML);
+	dropdownLi.setAttribute("value", selectOption.options[i].value);
+	//Add operations here
+	dropdownLi.appendChild(dropdownLiNode);
+	dropdownUl.appendChild(dropdownLi);
+	// dropdownLi.onclick = changeSelectOption;
 }
 
 dropDownList.appendChild(dropdownUl);
 
-// CREATE BUTTON
+function getEventTarget(e) {
+        e = e || window.event;
+        return e.target || e.srcElement; 
+    }
 
-const buttonNode = document.createTextNode('Nav Point');
-button.setAttribute("id", "dropdown-button");
-button.appendChild(buttonNode);
+dropdownUl.onclick = function(event) {
+        var target = getEventTarget(event);
+        // alert(target.innerHTML);
+        function changeSelectOption() {
+			selectOption.onchange = GetSelectedTextValue();
+
+			function GetSelectedTextValue() {
+				// var buttonNode1;
+				if (target.innerHTML === "Volvo") {
+					selectOption.options[0].selected = "true";
+					buttonNode = document.createTextNode(selectOption.options[0].innerHTML);
+
+				} else if (target.innerHTML === "Saab") {
+					selectOption.options[1].selected = "true";
+					buttonNode = document.createTextNode(selectOption.options[1].innerHTML);
+				} if (target.innerHTML === "Opel") {
+					selectOption.options[2].selected = "true";
+					buttonNode = document.createTextNode(selectOption.options[2].innerHTML);
+				} else if (target.innerHTML === "Audi") {
+					selectOption.options[3].selected = "true";
+					buttonNode = document.createTextNode(selectOption.options[3].innerHTML);
+				}
+		        
+		        button.appendChild(buttonNode);
+		    }
+		}
+		changeSelectOption();
+
+		
+
+    };
+
+
+
+
+
+
 
 // BUTTON CLICK FUNCTION
 button.onclick = buttonClick;
@@ -81,7 +96,7 @@ area.appendChild(dropDownList);
 
 var activeClass = document.getElementById('dropdownLi-1');
 console.log(activeClass);
-activeClass.classList.add('active');
+// activeClass.classList.add('active');
 
 var dropdownAr = document.getElementById('dropdownDiv');
 
